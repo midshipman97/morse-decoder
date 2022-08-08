@@ -38,8 +38,34 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let output = ''; // будет переменной для вывода
+
+    for(let i = 0; i < expr.length; i += 10) { // разбиваем по 10 символов входную строку
+        value = expr.substring(i, i + 10); 
+
+        if(value === '**********') { //если ********** то сразу добавляем к выходу пробел
+            output += ' ';
+            continue;
+        }
+
+        let morse = ''; //переменная для кодировки азбуки морзе
+        for (let j = 0; j < value.length; j += 2) { //бъем по два символа и кодируем по результату
+            valueMorse = value.substring(j, j + 2); 
+            if (valueMorse === '00') {
+                continue;
+            }
+            if (valueMorse === '10') {
+                morse += '.';
+            }
+            if (valueMorse === '11') {
+                morse += '-';
+            }
+        }
+        output += MORSE_TABLE[morse]; //склеиваем все полученные значения цикла
+    }
+    return output; //выводим результат
 }
+
 
 module.exports = {
     decode
